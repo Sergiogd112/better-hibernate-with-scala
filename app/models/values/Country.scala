@@ -2,12 +2,11 @@ package models
 package values
 
 import javax.persistence._
-import org.hibernate.annotations.{ Fetch, FetchMode }
+import org.hibernate.annotations.{Fetch, FetchMode}
 import java.util.LinkedHashSet
 import java.util.{HashSet, Set => JSet}
 import scala.collection.JavaConversions.asScalaSet
 import scala.collection.immutable.Set
-
 
 @Entity
 class Country extends PersistentEntity {

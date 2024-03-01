@@ -16,10 +16,14 @@ import org.hibernate.criterion.{Order => HibernateOrder}
 
 abstract class DAO[T <: PersistentEntity, PK <: Serializable] {
   import DAO._
-  
-  protected val persistentClass: Class[T] = 
-    getClass.getGenericSuperclass().asInstanceOf[ParameterizedType].
-      getActualTypeArguments().apply(0).asInstanceOf[Class[T]]
+
+  protected val persistentClass: Class[T] =
+    getClass
+      .getGenericSuperclass()
+      .asInstanceOf[ParameterizedType]
+      .getActualTypeArguments()
+      .apply(0)
+      .asInstanceOf[Class[T]]
 
   def findById(id: PK)(implicit s: Session): Option[T] = {
     Option(s.get(persistentClass, id).asInstanceOf[T]);
@@ -30,7 +34,7 @@ abstract class DAO[T <: PersistentEntity, PK <: Serializable] {
     addOrders(criteria, ordering)
     criteria.list.asInstanceOf[JList[T]]
   }
-  
+
   def removeById(id: PK)(implicit s: Session) = {
     s.delete(findById(id))
   }
@@ -72,13 +76,13 @@ abstract class DAO[T <: PersistentEntity, PK <: Serializable] {
 object DAO {
   private def toHibernateOrder(order: OrderBy) = {
     order match {
-      case Order.asc(propertyName) => HibernateOrder.asc(propertyName)
+      case Order.asc(propertyName)  => HibernateOrder.asc(propertyName)
       case Order.desc(propertyName) => HibernateOrder.desc(propertyName)
       case _ => throw new RuntimeException("invalid order type")
     }
   }
-  
+
   private def addOrders(criteria: Criteria, ordering: Seq[OrderBy]) = {
-    ordering map { toHibernateOrder  } foreach { criteria.addOrder }
+    ordering map { toHibernateOrder } foreach { criteria.addOrder }
   }
 }

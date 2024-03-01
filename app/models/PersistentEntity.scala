@@ -19,7 +19,7 @@ trait PersistentEntity {
   var version: Integer = 0
 
   override def equals(other: Any) = {
-    if(other == null || other.getClass != this.getClass) {
+    if (other == null || other.getClass != this.getClass) {
       false
     }
 
@@ -28,11 +28,11 @@ trait PersistentEntity {
   }
 
   override def hashCode = {
-    if(id == null) 0 else id.hashCode
+    if (id == null) 0 else id.hashCode
   }
 
 }
 
 trait IdentifierProperty {
-  val Id = "id"	
+  val Id = "id"
 }

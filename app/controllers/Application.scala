@@ -10,16 +10,19 @@ import securesocial.core.RuntimeEnvironment
 import services.UserService
 import securesocial.core.SecureSocial
 import javax.inject._
-import play.api.i18n.{ MessagesApi, I18nSupport }
+import play.api.i18n.{MessagesApi, I18nSupport}
 import utils.RequestUtil.toJsonString
 
 @Singleton
-class Application @Inject() (private val userService: UserService,
-                             val messagesApi: MessagesApi,
-                             implicit val env: RuntimeEnvironment[User]) extends Controller with SecureSocial[User] with I18nSupport {
-  
-  def index = Action { implicit request =>
+class Application @Inject() (
+    private val userService: UserService,
+    val messagesApi: MessagesApi,
+    implicit val env: RuntimeEnvironment[User]
+) extends Controller
+    with SecureSocial[User]
+    with I18nSupport {
 
+  def index = Action { implicit request =>
     val u = new User
     val mainProfile = new UserProfile
     mainProfile.providerId = "twitter"
